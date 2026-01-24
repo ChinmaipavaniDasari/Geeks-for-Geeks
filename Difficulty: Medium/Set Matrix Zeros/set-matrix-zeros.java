@@ -3,49 +3,25 @@ class Solution {
         int n = mat.length;
         int m = mat[0].length;
 
-        boolean firstRowZero = false;
-        boolean firstColZero = false;
+        boolean row[] = new boolean[n];
+        boolean col[] = new boolean[m];
 
-        for (int j = 0; j < m; j++) {
-            if (mat[0][j] == 0) {
-                firstRowZero = true;
-                break;
-            }
-        }
-
+        // Step 1: Mark rows and columns which have zero
         for (int i = 0; i < n; i++) {
-            if (mat[i][0] == 0) {
-                firstColZero = true;
-                break;
-            }
-        }
-
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
+            for (int j = 0; j < m; j++) {   // FIXED: j < m
                 if (mat[i][j] == 0) {
-                    mat[i][0] = 0;
-                    mat[0][j] = 0;
+                    row[i] = true;
+                    col[j] = true;
                 }
             }
         }
 
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                if (mat[i][0] == 0 || mat[0][j] == 0) {
+        // Step 2: Set matrix cells to zero
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {   // FIXED: j < m
+                if (row[i] || col[j]) {
                     mat[i][j] = 0;
                 }
-            }
-        }
-
-        if (firstRowZero) {
-            for (int j = 0; j < m; j++) {
-                mat[0][j] = 0;
-            }
-        }
-
-        if (firstColZero) {
-            for (int i = 0; i < n; i++) {
-                mat[i][0] = 0;
             }
         }
     }
